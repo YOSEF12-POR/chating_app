@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "103327525728",
+    "project_id": "chatingapp-2a40b",
+    "storage_bucket": "chatingapp-2a40b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103327525728:android:45bf8b43374ec6dacbcc05",
+        "android_client_info": {
+          "package_name": "ya.yosef.chating_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103327525728-83de8u44und30feo78q9ni24cf92ahoq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPAXqkAerkUPpW7snxUz29KDrM36Kg03w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103327525728-83de8u44und30feo78q9ni24cf92ahoq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
