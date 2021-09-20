@@ -1,17 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ChatScreen extends StatefulWidget {
-   static const String ScreenRoute = 'chat_screen';
+  static const String ScreenRoute = 'chat_screen';
 
   const ChatScreen({Key? key}) : super(key: key);
-
-
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final _auth = FirebaseAuth.instance;
+  late User signedInUser;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    getCurrentUser();
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        signedInUser = user;
+        print(signedInUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,13 +49,17 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
             onPressed: () {
               // add here logout function
+              _auth.signOut();
+              Navigator.pop(context);
             },
             icon: Icon(Icons.close),
           )
         ],
       ),
-      body: SafeArea( // بعد اطراف التطبيق عن الحواف يعني زي مارجن  
-        child: Column( // عشام العناصر مصفوفين بعمود 
+      body: SafeArea(
+        // بعد اطراف التطبيق عن الحواف يعني زي مارجن
+        child: Column(
+          // عشام العناصر مصفوفين بعمود
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

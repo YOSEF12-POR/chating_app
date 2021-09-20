@@ -1,5 +1,7 @@
+import 'package:chating_app/screens/chat_screen.dart';
 import 'package:chating_app/widgets/my_button.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegistertionScreen extends StatefulWidget {
   static const String ScreenRoute = 'registertion_screen';
@@ -10,6 +12,11 @@ class RegistertionScreen extends StatefulWidget {
 }
 
 class _RegistertionScreenState extends State<RegistertionScreen> {
+  final _auth = FirebaseAuth.instance;
+
+  late String email;
+  late String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +33,11 @@ class _RegistertionScreenState extends State<RegistertionScreen> {
             ),
             SizedBox(height: 50),
             TextField(
+              keyboardType: TextInputType.emailAddress,
               textAlign: TextAlign.center,
-              onChanged: (value) {},
+              onChanged: (value) {
+                email = value;
+              },
               decoration: InputDecoration(
                 hintText: 'Enter your Email ',
                 contentPadding:
@@ -51,8 +61,11 @@ class _RegistertionScreenState extends State<RegistertionScreen> {
             ),
             SizedBox(height: 8),
             TextField(
+              obscureText: true,
               textAlign: TextAlign.center,
-              onChanged: (value) {},
+              onChanged: (value) {
+                password = value;
+              },
               decoration: InputDecoration(
                 hintText: 'Enter your Password ',
                 contentPadding:
@@ -78,7 +91,17 @@ class _RegistertionScreenState extends State<RegistertionScreen> {
             MyButton(
               color: Colors.blue[800]!,
               title: 'Register ',
-              onPressed: () {},
+              onPressed: () async {
+                // print(email);
+                // print(password);
+                try {
+                  final newUser = await _auth.createUserWithEmailAndPassword(
+                      email: email, password: password);
+                  Navigator.pushNamed(context, ChatScreen.ScreenRoute);
+                } catch (e) {
+                  print(e);
+                }
+              },
             ),
           ],
         ),
