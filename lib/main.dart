@@ -8,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 //git add .
 // git push origin master
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
