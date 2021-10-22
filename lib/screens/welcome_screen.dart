@@ -25,17 +25,18 @@ class WelcomeScreen extends StatelessWidget {
             Column(
               children: [
                 Container(
-                  height: 180,
+                  height: 190,
                   child: Image.asset('images/logo.png'),
                 ),
                 Text(
-                  'Chating App',
+                  'Yalah Chat',
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w900,
                     color: Color(0xff2e386b),
                   ),
-                )
+                ),
+
               ],
             ),
             SizedBox(
@@ -55,6 +56,23 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.pushNamed(context, RegistertionScreen.ScreenRoute);
               },
             ),
+            SizedBox(
+              height: 30,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+
+                Text(
+                  'PR.YOSEF AYMAN ABD-ALWAHHAB',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.blue[800]!,
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),

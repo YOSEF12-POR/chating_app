@@ -1,10 +1,10 @@
 import '../screens/chat_screen.dart';
-
 import '../screens/registertion_screen.dart';
 import '../screens/signin_screen.dart';
 import '../screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 //git add .
 // git push origin master
@@ -21,15 +21,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Chat App',
+        title: 'Yalah Chat',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
         // home: ChatScreen(),
-        initialRoute: WelcomeScreen.ScreenRoute,
+        initialRoute: _auth.currentUser != null
+            ? ChatScreen.ScreenRoute
+            : WelcomeScreen.ScreenRoute,
         routes: {
           WelcomeScreen.ScreenRoute: (context) => WelcomeScreen(),
           SignInScreen.ScreenRoute: (context) => SignInScreen(),

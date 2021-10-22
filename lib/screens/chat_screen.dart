@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 final _firestore = FirebaseFirestore.instance;
 late User signedInUser;
@@ -46,13 +46,13 @@ class _ChatScreenState extends State<ChatScreen> {
   //   }
   // }
 
-  void messagesStreams() async {
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {
-      for (var message in snapshot.docs) {
-        print(message.data());
-      }
-    }
-  }
+  // void messagesStreams() async {
+  //   await for (var snapshot in _firestore.collection('messages').snapshots()) {
+  //     for (var message in snapshot.docs) {
+  //       print(message.data());
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -63,18 +63,18 @@ class _ChatScreenState extends State<ChatScreen> {
           children: [
             Image.asset('images/logo.png', height: 25),
             SizedBox(width: 10),
-            Text('Chat App')
+            Text('Yalah Chat')
           ],
         ),
         actions: [
           IconButton(
             onPressed: () {
-              messagesStreams();
+              // messagesStreams();
               // add here logout function
-              // _auth.signOut();
-              // Navigator.pop(context);
+              _auth.signOut();
+              Navigator.pop(context);
             },
-            icon: Icon(Icons.download),
+            icon: Icon(Icons.close),
           )
         ],
       ),
@@ -120,6 +120,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       _firestore.collection('messages').add({
                         'text': messageText,
                         'sender': signedInUser.email,
+                        'time':
+                            FieldValue.serverTimestamp(), // ترتيب الرسائل بلوقت
                       });
                     },
                     child: Text(
@@ -130,10 +132,45 @@ class _ChatScreenState extends State<ChatScreen> {
                         fontSize: 18,
                       ),
                     ),
-                  )
+
+                  ),
                 ],
               ),
+
             ),
+
+            Divider(
+              height: 20,
+              thickness: 5,
+              indent: 20,
+              endIndent: 20,
+              color: Colors.yellow[900],
+            ),
+
+            SizedBox(
+        height: 20,
+      ), Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+
+            Text(
+              'PR.YOSEF AYMAN ABD-ALWAHHAB',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w900,
+                color: Colors.blue[800]!,
+              ),
+            ),
+          ],
+
+
+        ),
+
+            SizedBox(
+              height: 20,
+            ),
+
+
           ],
         ),
       ),
@@ -147,7 +184,7 @@ class MessageStreamBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('messages').snapshots(),
+      stream: _firestore.collection('messages').orderBy('time').snapshots(),
       builder: (context, snapshot) {
         List<MessageLine> messageWidgets = [];
         if (!snapshot.hasData) {
@@ -157,7 +194,7 @@ class MessageStreamBuilder extends StatelessWidget {
             ),
           );
         }
-        final messages = snapshot.data!.docs;
+        final messages = snapshot.data!.docs.reversed;
         for (var message in messages) {
           final messageText = message.get('text');
           final messageSender = message.get('sender');
@@ -172,6 +209,7 @@ class MessageStreamBuilder extends StatelessWidget {
         }
         return Expanded(
           child: ListView(
+            reverse: true,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             children: messageWidgets,
           ),

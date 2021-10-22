@@ -112,8 +112,26 @@ class _SignInScreenState extends State<SignInScreen> {
                   }
                 },
               ),
+          SizedBox(
+          height: 30,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+
+            Text(
+              'PR.YOSEF AYMAN ABD-ALWAHHAB',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w900,
+                color: Colors.blue[800]!,
+              ),
+            ),
+          ],
+        )
             ],
-          ),
+          )
+
         ),
       ),
     );
